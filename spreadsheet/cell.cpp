@@ -42,7 +42,7 @@ void Cell::Set(std::string text) {
 }
 
 void Cell::Clear() {
-	impl_ = std::make_unique<EmptyImpl>();
+	Set("");
 }
 
 // Возвращает видимое значение ячейки.
@@ -77,7 +77,7 @@ void Cell::InvalidateAllCache(bool first) {
 	}
 }
 
-struct cell_hasher {
+struct CellHasher {
 	size_t operator()(const Cell* cell) const {
 		std::hash<const void*> hasher;
 		return hasher(cell);
@@ -89,8 +89,8 @@ bool Cell::HasCircularDependency(const std::vector<Position>& referenced_cells) 
 		return false;
 	}
 
-	std::unordered_set<const Cell*, cell_hasher> referenced_cells_set;
-	std::unordered_set<const Cell*, cell_hasher> visited_cells;
+	std::unordered_set<const Cell*, CellHasher> referenced_cells_set;
+	std::unordered_set<const Cell*, CellHasher> visited_cells;
 	std::vector<const Cell*> cells_to_check;
 
 	for (const Position& pos : referenced_cells) {
