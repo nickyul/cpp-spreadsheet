@@ -145,34 +145,39 @@ public:
     double Evaluate(std::function<double(Position)>& args) const override {
         double lhs_operand = lhs_->Evaluate(args);
         double rhs_operand = rhs_->Evaluate(args);
+        double result;
         switch (type_) {
         case Type::Add:
-            if (std::isfinite(lhs_operand + rhs_operand)) {
-                return lhs_operand + rhs_operand;
+            result = lhs_operand + rhs_operand;
+            if (std::isfinite(result)) {
+                return result;
             }
             else {
                 throw FormulaError(FormulaError::Category::Arithmetic);
             }
             break;
         case Type::Subtract:
-            if (std::isfinite(lhs_operand - rhs_operand)) {
-                return lhs_operand - rhs_operand;
+            result = lhs_operand - rhs_operand;
+            if (std::isfinite(result)) {
+                return result;
             }
             else {
                 throw FormulaError(FormulaError::Category::Arithmetic);
             }
             break;
         case Type::Multiply:
-            if (std::isfinite(lhs_operand * rhs_operand)) {
-                return lhs_operand * rhs_operand;
+            result = lhs_operand * rhs_operand;
+            if (std::isfinite(result)) {
+                return result;
             }
             else {
                 throw FormulaError(FormulaError::Category::Arithmetic);
             }
             break;
         case Type::Divide:
-            if (std::isfinite(lhs_operand / rhs_operand)) {
-                return lhs_operand / rhs_operand;
+            result = lhs_operand / rhs_operand;
+            if (std::isfinite(result)) {
+                return result;
             }
             else {
                 throw FormulaError(FormulaError::Category::Arithmetic);
