@@ -34,6 +34,7 @@ private:
 
     void SetColSize();
     void SetRowSize();
+    void CheckPosValid(Position pos) const;
 
     Size table_size_;
     std::vector<std::vector<CellPtr>> cell_pointers_;
