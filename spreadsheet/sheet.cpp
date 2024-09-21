@@ -14,9 +14,7 @@ Sheet::Sheet()
 Sheet::~Sheet() {}
 
 void Sheet::SetCell(Position pos, std::string text) {
-    if (!pos.IsValid()) {
-        throw InvalidPositionException("Invalid cell position");
-    }
+    CheckPosValid(pos);
 
     // Необходимо увеличить заданную область печати (размер таблицы)
     if (table_size_.cols <= pos.col || table_size_.rows <= pos.row) {
@@ -58,9 +56,7 @@ void Sheet::SetCell(Position pos, std::string text) {
 }
 
 const CellInterface* Sheet::GetCell(Position pos) const {
-    if (!pos.IsValid()) {
-        throw InvalidPositionException("Invalid cell position");
-    }
+    CheckPosValid(pos);
 
     if (table_size_.cols <= pos.col || table_size_.rows <= pos.row) {
         return nullptr;
@@ -70,9 +66,7 @@ const CellInterface* Sheet::GetCell(Position pos) const {
 }
 
 CellInterface* Sheet::GetCell(Position pos) {
-    if (!pos.IsValid()) {
-        throw InvalidPositionException("Invalid cell position");
-    }
+    CheckPosValid(pos);
 
     if (table_size_.cols <= pos.col || table_size_.rows <= pos.row) {
         return nullptr;
@@ -82,9 +76,7 @@ CellInterface* Sheet::GetCell(Position pos) {
 }
 
 const Cell* Sheet::GetSimplyCell(Position pos) const {
-    if (!pos.IsValid()) {
-        throw InvalidPositionException("Invalid cell position");
-    }
+    CheckPosValid(pos);
 
     if (table_size_.cols <= pos.col || table_size_.rows <= pos.row) {
         return nullptr;
@@ -94,9 +86,7 @@ const Cell* Sheet::GetSimplyCell(Position pos) const {
 }
 
 Cell* Sheet::GetSimplyCell(Position pos) {
-    if (!pos.IsValid()) {
-        throw InvalidPositionException("Invalid cell position");
-    }
+    CheckPosValid(pos);
 
     if (table_size_.cols <= pos.col || table_size_.rows <= pos.row) {
         return nullptr;
@@ -106,9 +96,7 @@ Cell* Sheet::GetSimplyCell(Position pos) {
 }
 
 void Sheet::ClearCell(Position pos) {
-    if (!pos.IsValid()) {
-        throw InvalidPositionException("Invalid cell position");
-    } 
+    CheckPosValid(pos);
 
 
     if (table_size_.cols > pos.col && table_size_.rows > pos.row) {
@@ -196,6 +184,12 @@ void Sheet::SetRowSize() {
                 return;
             }
         }
+    }
+}
+
+void Sheet::CheckPosValid(Position pos) const {
+    if (!pos.IsValid()) {
+        throw InvalidPositionException("Invalid cell position");
     }
 }
 
